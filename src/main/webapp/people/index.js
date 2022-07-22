@@ -45,6 +45,8 @@ function deletePeople(row) {
                 async: true,
                 success: function (data, textStatus, jqXHR) {
                     M.toast({html: data});
+                    let count = parseInt($(".people-count").text());
+                    $(".people-count").html(count - 1);
                     row.remove();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -81,18 +83,19 @@ function indexPeople(page) {
         success: function (data, textStatus, jqXHR) {
             $('#table_people > tbody').empty();
             $(".pagination_people").empty();
+            $(".people-count").html(data.totalElements);
             $.each(data.content, function (index, value) {
                 addRowOnPeopleTable(value);
             });
             for (let i = 0; i < data.totalPages; i++) {
                 let output;
                 if (i === data.pageable.pageNumber) {
-                    output = `<li onclick="indexPeople(${i})" class="disabled"><a href="#!">${i+1}</a></li>`;
+                    output = `<li onclick="indexPeople(${i})" class="disabled"><a href="#!">${i + 1}</a></li>`;
                 } else {
-                    output = `<li onclick="indexPeople(${i})" class="waves-effect"><a href="#!">${i+1}</a></li>`;
+                    output = `<li onclick="indexPeople(${i})" class="waves-effect"><a href="#!">${i + 1}</a></li>`;
                 }
                 $(".pagination_people").append(output);
-                
+
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -128,6 +131,8 @@ $(document).ready(function () {
                 M.toast({html: 'Registro guardado con éxito'});
                 console.log(data);
                 addRowOnPeopleTable(data);
+                let count = parseInt($(".people-count").text());
+                $(".people-count").html(count + 1);
                 $("#modal_new_person").modal("close");
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -156,7 +161,7 @@ $(document).ready(function () {
             }),
             success: function (data, textStatus, jqXHR) {
                 M.toast({html: 'Registro actualizado con éxito'});
-                let nextRow = editing_row.next(); 
+                let nextRow = editing_row.next();
                 editing_row.remove();
                 console.log("tamaño siguiente fila", nextRow.children().length);
                 if (nextRow.children().length) {

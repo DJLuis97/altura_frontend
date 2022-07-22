@@ -21,7 +21,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s12">
-                    <h5>Personas</h5>
+                    <h5>Personas <span class="new badge people-count" data-badge-caption="">0</span></h5>
                     <a class="waves-effect waves-light btn modal-trigger" href="#modal_new_person">Nueva persona</a>
                 </div>
                 <div class="col s12">
