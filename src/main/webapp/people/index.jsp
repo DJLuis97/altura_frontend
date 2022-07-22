@@ -36,6 +36,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                    <ul class="pagination pagination_people"></ul>
                 </div>
             </div>
         </div>

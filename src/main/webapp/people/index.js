@@ -68,10 +68,10 @@ const buildRow = person => {
     </tr>`;
 };
 
-function indexPeople() {
+function indexPeople(page) {
     $.ajax({
         cache: false,
-        url: 'http://localhost:8080/api/person',
+        url: `http://localhost:8080/api/person?page=${page}`,
         type: 'GET',
         async: true,
         headers: {
@@ -79,9 +79,21 @@ function indexPeople() {
             "Access-Control-Allow-Origin": "*"
         },
         success: function (data, textStatus, jqXHR) {
-            $.each(data, function (index, value) {
+            $('#table_people > tbody').empty();
+            $(".pagination_people").empty();
+            $.each(data.content, function (index, value) {
                 addRowOnPeopleTable(value);
             });
+            for (let i = 0; i < data.totalPages; i++) {
+                let output;
+                if (i === data.pageable.pageNumber) {
+                    output = `<li onclick="indexPeople(${i})" class="disabled"><a href="#!">${i+1}</a></li>`;
+                } else {
+                    output = `<li onclick="indexPeople(${i})" class="waves-effect"><a href="#!">${i+1}</a></li>`;
+                }
+                $(".pagination_people").append(output);
+                
+            }
         },
         error: function (jqXHR, textStatus, errorThrown) {
             M.toast({html: 'Algo inesperado paso al obtener los registros', classes: 'rounded'});
@@ -94,7 +106,7 @@ function indexPeople() {
 
 $(document).ready(function () {
     $('.modal').modal();
-    indexPeople();
+    indexPeople(0);
     $('.action_new_person').click(function (event) {
         event.preventDefault();
         $('.action_new_person').prop('disabled', true);
