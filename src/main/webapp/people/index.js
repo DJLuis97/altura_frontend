@@ -65,8 +65,8 @@ const buildRow = person => {
     return `<tr data-id="${person.id}">
         <td>${person.name}</td>
         <td>${person.lastName}</td>
-        <td><a class="waves-effect waves-light btn-small" onclick="editPeople($(this).closest('tr'))">Editar</a></td>
-        <td><a class="waves-effect waves-light btn-small" onclick="deletePeople($(this).closest('tr'))">Borrar</a></td>
+        <td><a class="waves-effect waves-light btn-small" onclick="editPeople($(this).closest('tr'))"><i class="material-icons">create</i></a></td>
+        <td><a class="waves-effect waves-light btn-small red" onclick="deletePeople($(this).closest('tr'))"><i class="material-icons">delete_forever</i></a></td>
     </tr>`;
 };
 
